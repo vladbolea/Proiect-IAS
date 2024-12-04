@@ -4,6 +4,8 @@ import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
+import Navbar from "../_components/navbar";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -15,9 +17,14 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
+    <html lang="en" className={`${GeistSans.variable} overflow-x-hidden`}>
       <body>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <div className="min-h-[100vh] min-w-[100vw] bg-black px-16">
+          <SessionProvider>
+            <Navbar />
+            <TRPCReactProvider>{children}</TRPCReactProvider>
+          </SessionProvider>
+        </div>
       </body>
     </html>
   );
