@@ -1,8 +1,8 @@
 "use client";
 
-import { Card, CardFooter, CardHeader, CardTitle } from "./shadcn/card";
+import { Card, CardHeader, CardTitle } from "./shadcn/card";
 import { Dispatch, SetStateAction, useState } from "react";
-import type { Card as CardEntity } from "@prisma/client";
+import type { Card as CardEntity, Task } from "@prisma/client";
 import { api } from "~/trpc/react";
 import { TaskItem } from "./task";
 import { CreateTaskModal } from "./create-task-modal";
@@ -31,7 +31,11 @@ export function CardItem({ card }: { card: CardEntity }) {
           {tasks ? tasks.map((t) => <TaskItem key={t.id} task={t} />) : <></>}
         </div>
       </Card>
-      <CreateTaskModal openModal={openModal} setOpenModal={setOpenModal} cardData={card} />
+      <CreateTaskModal
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        cardData={card as CardEntity & { tasks: Task[] }}
+      />
     </>
   );
 }
