@@ -6,9 +6,9 @@ import { api } from "~/trpc/server";
 export default async function BoardId({
   params,
 }: {
-  params: { boardId: string };
+  params: Promise<{ boardId: string }>;
 }) {
-  const { boardId } = params;
+  const { boardId } = await params;
 
   const data = await api.board.getById(boardId);
 
